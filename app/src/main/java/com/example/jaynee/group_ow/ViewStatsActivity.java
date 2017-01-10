@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.android.volley.RetryPolicy;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.Request;
@@ -28,6 +30,7 @@ public class ViewStatsActivity extends AppCompatActivity
 {
     private RequestQueue requestQueue;
     private Gson gson;
+    private Stats userStats;
 
     /**
      * Initializes the activity and stores the battle.net ID of the user passed from the previous
@@ -52,6 +55,12 @@ public class ViewStatsActivity extends AppCompatActivity
         fetchPosts(urlStr);
     }
 
+    private void displayStats()
+    {
+        TextView soloKills = (TextView) findViewById(R.id.solo_kills);
+        soloKills.setText("Solo Kills: " + userStats.SoloKills + "\nFinal Blows: " + userStats.FinalBlows);
+    }
+
     /**
      * This method will attempt to connect to the API's request URL for the individual data on
      * overall competitive play.
@@ -60,9 +69,13 @@ public class ViewStatsActivity extends AppCompatActivity
      */
     private void fetchPosts(String ENDPOINT)
     {
+        int timeout = 30000;
         StringRequest request = new StringRequest(Request.Method.GET, ENDPOINT,
                 onPostsLoaded, onPostsError);
+        RetryPolicy policy = new DefaultRetryPolicy(timeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
+        request.setRetryPolicy(policy);
         requestQueue.add(request);
     }
 
@@ -74,12 +87,9 @@ public class ViewStatsActivity extends AppCompatActivity
         @Override
         public void onResponse(String response)
         {
-//            Log.i("PostActivity", response);
-            TextView soloKills = (TextView) findViewById(R.id.solo_kills);
-            Stats stats = gson.fromJson(response, Stats.class);
-
-            soloKills.setText(stats.soloKills + ": " + stats.SoloKills);
-            Log.i("PostActivity", "Solo Kills: " + stats.SoloKills);
+            userStats = gson.fromJson(response, Stats.class);
+            Log.i("PostActivity", "Solo Kills: " + userStats.SoloKills);
+            displayStats();
         }
     };
 
@@ -94,6 +104,7 @@ public class ViewStatsActivity extends AppCompatActivity
             Log.e("PostActivity", error.toString());
         }
     };
+
 
 //    @Override
 //    public void onBackPressed()
