@@ -15,7 +15,13 @@ import com.google.gson.*;
 
 import org.w3c.dom.Text;
 
-/*
+/**
+ * ViewStatsActivity class is the new activity that is launched from the main activity when the user
+ * selects a user to view his or her game stats. This activity displays all of the user's overall competitive
+ * competitive stats that is pulled from a web API. The API sends the stats in a JSON file, parsed using
+ * GSON and Volley, and then the individual stats are stored into its respective variables in the Stats
+ * class.
+ *
  * Networking Help: https://kylewbanks.com/blog/Implementing-Google-Plus-Style-ListView-Animations-on-Android
  */
 public class ViewStatsActivity extends AppCompatActivity
@@ -23,6 +29,12 @@ public class ViewStatsActivity extends AppCompatActivity
     private RequestQueue requestQueue;
     private Gson gson;
 
+    /**
+     * Initializes the activity and stores the battle.net ID of the user passed from the previous
+     * activity and find his or her game data.
+     *
+     * @param savedInstanceState Data stored about the app's previous state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -33,13 +45,19 @@ public class ViewStatsActivity extends AppCompatActivity
         String urlStr = "https://api.lootbox.eu/pc/us/" + user + "/competitive/allHeroes/";
 
         GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.setDateFormat("M/d/yy hh:mm a");
+//        gsonBuilder.setDateFormat("M/d/yy hh:mm a");
         gson = gsonBuilder.create();
 
         requestQueue = Volley.newRequestQueue(this);
         fetchPosts(urlStr);
     }
 
+    /**
+     * This method will attempt to connect to the API's request URL for the individual data on
+     * overall competitive play.
+     *
+     * @param ENDPOINT The URL request to make a connection to
+     */
     private void fetchPosts(String ENDPOINT)
     {
         StringRequest request = new StringRequest(Request.Method.GET, ENDPOINT,
@@ -48,7 +66,9 @@ public class ViewStatsActivity extends AppCompatActivity
         requestQueue.add(request);
     }
 
-    // Action when network request is successful
+    /**
+     * When a successful connection has been made, this method displays the player's stats.
+     */
     private final Response.Listener<String> onPostsLoaded = new Response.Listener<String>()
     {
         @Override
@@ -63,7 +83,9 @@ public class ViewStatsActivity extends AppCompatActivity
         }
     };
 
-    // Error for when network request fails
+    /**
+     * A failed connection will currently log the error message.
+     */
     private final Response.ErrorListener onPostsError = new Response.ErrorListener()
     {
         @Override

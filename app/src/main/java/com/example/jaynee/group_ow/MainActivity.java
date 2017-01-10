@@ -11,9 +11,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 
+/**
+ * MainActivity class is the main activity seen at the launch of this application that displays
+ * the initials of Overwatch players within my group of friends as buttons. Users can select whom
+ * they want to view statistics for or view their own. This app currently only displays
+ * competitive overall statistics for each player. Future implementation will also use the API's
+ * option that will allow for individual hero plays and quick play data.
+ */
 public class MainActivity extends AppCompatActivity
 {
 
+    /**
+     * Initializes the application and its UI contents such as the buttons containing the
+     * name initials.
+     *
+     * @param savedInstanceState Data stored about the app's previous state
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -33,6 +46,13 @@ public class MainActivity extends AppCompatActivity
 //        });
     }
 
+    /**
+     * This method listens to button clicks and starts a new activity to display the player's
+     * statistics. The user's respective battle.net ID will be added to the intent for the new activity
+     * to load the appropriate statistics.
+     *
+     * @param v Event handler to determine which button was clicked
+     */
     public void onClick(View v)
     {
         Intent intent = new Intent(MainActivity.this, ViewStatsActivity.class);
@@ -49,20 +69,28 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+    /**
+     * Creates the menu for the app as well as items such as extra app options if it is present.
+     *
+     * @param menu The menu object to be created
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu)
     {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
+    /**
+     * Listens to options selected from the menu bar and handles the event.
+     * More features and options will be created in the future for the user to choose from.
+     *
+     * @param item Option that was selected from the menu
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
 //        int id = item.getItemId();
 //
 //        //noinspection SimplifiableIfStatement
