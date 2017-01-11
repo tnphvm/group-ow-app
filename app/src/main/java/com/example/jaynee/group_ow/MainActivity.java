@@ -21,6 +21,8 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity
 {
 
+    private String chuongID = "twochuongz-1567";
+
     /**
      * Initializes the application and its UI contents such as the buttons containing the
      * name initials.
@@ -56,11 +58,12 @@ public class MainActivity extends AppCompatActivity
     public void onClick(View v)
     {
         Intent intent = new Intent(MainActivity.this, ViewStatsActivity.class);
+        final String key = "battleID";
 
         switch (v.getId())
         {
             case R.id.chuong_button:
-                intent.putExtra("battleID", "twochuongz-1567");
+                intent.putExtra(key, chuongID);
                 break;
             default:
                 throw new RuntimeException("Unknown button ID");

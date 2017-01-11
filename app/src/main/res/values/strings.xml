@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">The Group Overwatch Stats</string>
     <string name="action_competitive">Competitive Stats</string>
-    <string name="main_description">Whose stats would you like to look at?</string>
+    <string name="main_description">Whose overall competitive stats would you like to look at?</string>
 </resources>

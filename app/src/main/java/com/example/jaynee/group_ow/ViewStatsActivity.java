@@ -18,8 +18,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.*;
 
-import org.w3c.dom.Text;
-
 /**
  * ViewStatsActivity class is the new activity that is launched from the main activity when the user
  * selects a user to view his or her game stats. This activity displays all of the user's overall competitive
@@ -48,8 +46,8 @@ public class ViewStatsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_stats);
 
-        String user = getIntent().getStringExtra("battleID");
-        String urlStr = "https://api.lootbox.eu/pc/us/" + user + "/competitive/allHeroes/";
+        final String user = getIntent().getStringExtra("battleID");
+        final String urlStr = "https://api.lootbox.eu/pc/us/" + user + "/competitive/allHeroes/";
 //        String urlStr = "badURL";   // For testing onErrorResponse()
 
         GsonBuilder gsonBuilder = new GsonBuilder();
@@ -60,10 +58,26 @@ public class ViewStatsActivity extends AppCompatActivity
         fetchPosts(urlStr);
     }
 
+    /**
+     * Initializes the TextView objects and populates them with the stats property names and values
+     * to display on the activity content.
+     */
     private void displayStats()
     {
-        TextView soloKills = (TextView) findViewById(R.id.solo_kills);
-        soloKills.setText("Solo Kills: " + userStats.SoloKills + "\nFinal Blows: " + userStats.FinalBlows);
+        final TextView statsNames = (TextView) findViewById(R.id.stats_props);
+        final TextView statsVals = (TextView) findViewById(R.id.stats_values);
+        final String properties[] = userStats.getStatsProperties();
+        final String[] values = userStats.getStatsValues();
+
+        for (String prop : properties)
+        {
+            statsNames.append(prop + "\n");
+        }
+
+        for (String val : values)
+        {
+            statsVals.append(val + "\n");
+        }
     }
 
     /**
@@ -75,10 +89,10 @@ public class ViewStatsActivity extends AppCompatActivity
     private void fetchPosts(String ENDPOINT)
     {
         parsingStats = new ProgressDialog(ViewStatsActivity.this);
-        int timeout = 30000;
-        StringRequest request = new StringRequest(Request.Method.GET, ENDPOINT,
+        final int timeout = 30000;
+        final StringRequest request = new StringRequest(Request.Method.GET, ENDPOINT,
                 onPostsLoaded, onPostsError);
-        RetryPolicy policy = new DefaultRetryPolicy(timeout, 2,
+        final RetryPolicy policy = new DefaultRetryPolicy(timeout, 2,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
         request.setRetryPolicy(policy);
@@ -90,7 +104,7 @@ public class ViewStatsActivity extends AppCompatActivity
             @Override
             public void onCancel(DialogInterface dialog)
             {
-                finish();
+                finish();   // Closes the activity if the user cancels during the loading
             }});
         parsingStats.show();
     }
@@ -105,7 +119,7 @@ public class ViewStatsActivity extends AppCompatActivity
         {
             userStats = gson.fromJson(response, Stats.class);
 
-            Log.i("PostActivity", "Solo Kills: " + userStats.SoloKills);
+//            Log.i("PostActivity", "Solo Kills: " + userStats.SoloKills);
             parsingStats.dismiss();
             displayStats();
         }

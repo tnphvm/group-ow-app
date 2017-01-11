@@ -27,12 +27,24 @@
         android:layout_marginTop="33dp"
         android:fillViewport="true">
 
-        <TextView
-            android:text=""
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:ems="10"
-            android:id="@+id/solo_kills"/>
-    </ScrollView>
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_gravity="start"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:ems="14"
+                android:id="@+id/stats_props"/>
 
+            <TextView
+                android:gravity="end"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:ems="14"
+                android:id="@+id/stats_values"/>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

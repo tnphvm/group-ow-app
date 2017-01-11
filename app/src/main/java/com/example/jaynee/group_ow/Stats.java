@@ -2,26 +2,26 @@ package com.example.jaynee.group_ow;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.DecimalFormat;
+
 /**
- * Stats class stores each statistical information.
+ * Stats class stores each statistical information from the JSON file retrieved from the API.
  */
 public class Stats
 {
 //    @SerializedName("SoloKills")
 //    int soloKills;
 
-    String soloKills = "Solo Kills";
-
-    String MeleeFinalBlows;
-    String SoloKills;
-    String ObjectiveKills;
-    String FinalBlows;
-    String DamageDone;
-    String Eliminations;
-    String EnvironmentalKills;
-    String MultiKills;
-    String HealingDone;
-    String TeleporterPadsDestroyed;
+    private String MeleeFinalBlows;
+    private String SoloKills;
+    private String ObjectiveKills;
+    private String FinalBlows;
+    private String DamageDone;
+    private String Eliminations;
+    private String EnvironmentalKills;
+    private String Multikills;
+    private String HealingDone;
+    private String TeleporterPadsDestroyed;
 
 //    @SerializedName("Eliminations-MostinGame")
 //    String EliminationsMostinGame;
@@ -89,35 +89,86 @@ public class Stats
 //    @SerializedName("Eliminations-Average")
 //    String EliminationsAverage;
 
-    String Deaths;
-    String EnvironmentalDeaths;
-    String Cards;
-    String Medals;
+    private String Deaths;
+    private String EnvironmentalDeaths;
+    private String Cards;
+    private String Medals;
 
     @SerializedName("Medals-Gold")
-    String MedalsGold;
+    private String MedalsGold;
 
     @SerializedName("Medals-Silver")
-    String MedalsSilver;
+    private String MedalsSilver;
 
     @SerializedName("Medals-Bronze")
-    String MedalsBronze;
+    private String MedalsBronze;
 
-    String GamesPlayed;
-    String GamesWon;
+    private String GamesPlayed;
+    private String GamesWon;
 
 //    @SerializedName("MeleeFinalBlows-MostinGame")
 //    String MeleeFinalBlowsMostinGame;
 
-    String GamesTied;
-    String GamesLost;
-    String DefensiveAssists;
+    private String GamesTied;
+    private String GamesLost;
+    private String DefensiveAssists;
 
 //    @SerializedName("DefensiveAssists-Average")
 //    String DefensiveAssistsAverage;
-//
-//    String OffensiveAssists;
-//
+
+    String OffensiveAssists;
+
 //    @SerializedName("OffensiveAssists-Average")
 //    String OffensiveAssistsAverage;
+
+    String winRate;
+
+    /**
+     * Returns an array of all the stats properties.
+     *
+     * @return A String array of the stats properties
+     */
+    public String[] getStatsProperties()
+    {
+        final String properties[] =  new String[] {"Melee Final Blows: ", "Solo Kills: ",
+                "Objective Kills: ", "Final Blows: ", "Damage Done: ", "Eliminations: ",
+                "Environmental Kills: ", "Multi Kills: ", "Healing Done: ",
+                "Teleporter Pads Destroyed: ",  "Deaths: ", "Environmental Deaths: ", "Cards: ",
+                "Medals: ", "Gold Medals: ",  "Silver Medals: ", "Bronze Medals: ",
+                "Games Played: ",  "Games Won: ", "Games Tied: ", "Games Lost: ",
+                "Defensive Assists: ", "Offensive Assists: ", "Win Rate: "};
+
+        return properties;
+    }
+
+    /**
+     * Returns an array of the the class variables' value.
+     *
+     * @return A String array of the class variables' value
+     */
+    public String[] getStatsValues()
+    {
+        final String values[] = new String[] {MeleeFinalBlows, SoloKills, ObjectiveKills, FinalBlows,
+                DamageDone, Eliminations, EnvironmentalKills, Multikills, HealingDone,
+                TeleporterPadsDestroyed, Deaths, EnvironmentalDeaths, Cards, Medals, MedalsGold,
+                MedalsSilver, MedalsBronze, GamesPlayed, GamesWon, GamesTied, GamesLost,
+                DefensiveAssists, OffensiveAssists, getWinRate()};
+
+
+        return values;
+    }
+
+    /**
+     * Calculates the winning rate of the player.
+     *
+     * @return String value of the rate
+     */
+    public String getWinRate()
+    {
+        final double winPercent = (Double.parseDouble(GamesWon) / Double.parseDouble(GamesPlayed))
+                * 100;
+
+        winRate = String.format("%.2f",winPercent) + "%";
+        return winRate;
+    }
 }
