@@ -32,18 +32,22 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
                 android:layout_gravity="start"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:ems="14"
+                android:ems="12"
                 android:id="@+id/stats_props"/>
 
             <TextView
+                android:textSize="18sp"
                 android:gravity="end"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
-                android:ems="14"
+                android:ems="6"
                 android:id="@+id/stats_values"/>
         </LinearLayout>
     </ScrollView>

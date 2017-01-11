@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity
 {
 
     private String chuongID = "twochuongz-1567";
+    private String dylanID = "Dilpills-1678";
 
     /**
      * Initializes the application and its UI contents such as the buttons containing the
@@ -38,14 +39,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         final Button chuongBtn = (Button) findViewById(R.id.chuong_button);
-//        chuongBtn.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                startActivity(new Intent(MainActivity.this, ViewStatsActivity.class));
-//            }
-//        });
+        final Button dylanBtn = (Button) findViewById(R.id.dylan_button);
     }
 
     /**
@@ -64,6 +58,9 @@ public class MainActivity extends AppCompatActivity
         {
             case R.id.chuong_button:
                 intent.putExtra(key, chuongID);
+                break;
+            case R.id.dylan_button:
+                intent.putExtra(key, dylanID);
                 break;
             default:
                 throw new RuntimeException("Unknown button ID");
