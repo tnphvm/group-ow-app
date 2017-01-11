@@ -1,9 +1,12 @@
 package com.example.jaynee.group_ow;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.RetryPolicy;
 import com.android.volley.DefaultRetryPolicy;
@@ -31,6 +34,7 @@ public class ViewStatsActivity extends AppCompatActivity
     private RequestQueue requestQueue;
     private Gson gson;
     private Stats userStats;
+    private ProgressDialog parsingStats;
 
     /**
      * Initializes the activity and stores the battle.net ID of the user passed from the previous
@@ -46,6 +50,7 @@ public class ViewStatsActivity extends AppCompatActivity
 
         String user = getIntent().getStringExtra("battleID");
         String urlStr = "https://api.lootbox.eu/pc/us/" + user + "/competitive/allHeroes/";
+//        String urlStr = "badURL";   // For testing onErrorResponse()
 
         GsonBuilder gsonBuilder = new GsonBuilder();
 //        gsonBuilder.setDateFormat("M/d/yy hh:mm a");
@@ -69,14 +74,25 @@ public class ViewStatsActivity extends AppCompatActivity
      */
     private void fetchPosts(String ENDPOINT)
     {
+        parsingStats = new ProgressDialog(ViewStatsActivity.this);
         int timeout = 30000;
         StringRequest request = new StringRequest(Request.Method.GET, ENDPOINT,
                 onPostsLoaded, onPostsError);
-        RetryPolicy policy = new DefaultRetryPolicy(timeout, DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+        RetryPolicy policy = new DefaultRetryPolicy(timeout, 2,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
 
         request.setRetryPolicy(policy);
         requestQueue.add(request);
+
+        parsingStats.setMessage("Retrieving data...");
+        parsingStats.setCancelable(true);
+        parsingStats.setOnCancelListener(new DialogInterface.OnCancelListener(){
+            @Override
+            public void onCancel(DialogInterface dialog)
+            {
+                finish();
+            }});
+        parsingStats.show();
     }
 
     /**
@@ -88,20 +104,25 @@ public class ViewStatsActivity extends AppCompatActivity
         public void onResponse(String response)
         {
             userStats = gson.fromJson(response, Stats.class);
+
             Log.i("PostActivity", "Solo Kills: " + userStats.SoloKills);
+            parsingStats.dismiss();
             displayStats();
         }
     };
 
     /**
-     * A failed connection will currently log the error message.
+     * A failed connection will close the activity and display an error toast message.
      */
     private final Response.ErrorListener onPostsError = new Response.ErrorListener()
     {
         @Override
         public void onErrorResponse(VolleyError error)
         {
-            Log.e("PostActivity", error.toString());
+            // Log.e("PostActivity", error.toString());
+            Toast.makeText(ViewStatsActivity.this, "Unable to retrieve data.",
+                    Toast.LENGTH_LONG).show();
+            finish();
         }
     };
 
