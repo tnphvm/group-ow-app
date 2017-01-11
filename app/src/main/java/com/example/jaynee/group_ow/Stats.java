@@ -158,6 +158,15 @@ public class Stats
         return values;
     }
 
+    public boolean statsAvailable()
+    {
+        if (GamesPlayed == null)
+        {
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Calculates the winning rate of the player.
      *

@@ -121,7 +121,17 @@ public class ViewStatsActivity extends AppCompatActivity
 
 //            Log.i("PostActivity", "Solo Kills: " + userStats.SoloKills);
             parsingStats.dismiss();
-            displayStats();
+
+            if (userStats.statsAvailable())
+            {
+                displayStats();
+            }
+            else
+            {
+                Toast.makeText(ViewStatsActivity.this, "No competitive play data.",
+                        Toast.LENGTH_LONG).show();
+                finish();
+            }
         }
     };
 
