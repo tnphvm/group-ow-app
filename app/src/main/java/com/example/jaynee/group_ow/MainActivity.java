@@ -2,8 +2,6 @@ package com.example.jaynee.group_ow;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -21,8 +19,9 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity
 {
 
-    private String chuongID = "twochuongz-1567";
-    private String dylanID = "Dilpills-1678";
+    final private String chuongID = "twochuongz-1567";
+    final private String dylanID = "Dilpills-1678";
+    final private String haoID = "Luser-1435";
 
     /**
      * Initializes the application and its UI contents such as the buttons containing the

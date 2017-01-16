@@ -12,7 +12,7 @@
     tools:context="com.example.jaynee.group_ow.ViewStatsActivity">
 
     <TextView
-        android:text="Career Stats"
+        android:text="@string/stats_title"
         android:textSize="31sp"
         android:gravity="center"
         android:layout_width="match_parent"

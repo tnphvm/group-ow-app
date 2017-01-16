@@ -51,7 +51,6 @@ public class ViewStatsActivity extends AppCompatActivity
 //        String urlStr = "badURL";   // For testing onErrorResponse()
 
         GsonBuilder gsonBuilder = new GsonBuilder();
-//        gsonBuilder.setDateFormat("M/d/yy hh:mm a");
         gson = gsonBuilder.create();
 
         requestQueue = Volley.newRequestQueue(this);
@@ -104,7 +103,7 @@ public class ViewStatsActivity extends AppCompatActivity
             @Override
             public void onCancel(DialogInterface dialog)
             {
-                finish();   // Closes the activity if the user cancels during the loading
+                finish();   // Closes the activity if the user cancels during loading
             }});
         parsingStats.show();
     }

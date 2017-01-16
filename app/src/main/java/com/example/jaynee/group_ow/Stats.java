@@ -2,8 +2,6 @@ package com.example.jaynee.group_ow;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.text.DecimalFormat;
-
 /**
  * Stats class stores each statistical information from the JSON file retrieved from the API.
  */
@@ -158,6 +156,12 @@ public class Stats
         return values;
     }
 
+    /**
+     * Checks whethet statistics are available for a user by checking if total games played are > 0.
+     * Returns false if gamesPlayed is null.
+     *
+     * @return A boolean value indicating whether stats are available for a user
+     */
     public boolean statsAvailable()
     {
         if (GamesPlayed == null)
