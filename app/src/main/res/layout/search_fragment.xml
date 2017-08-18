@@ -1,50 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="com.example.jaynee.group_ow.SearchFragment">
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="31dp"
-        android:src="@drawable/logo"
-        android:visibility="visible"/>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.jaynee.group_ow.SearchFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/logo"
-        android:layout_marginTop="53dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:padding="20dp">
 
-        <EditText
-            android:id="@+id/battleTag"
+        <TextView
+            android:id="@+id/app_title"
             android:layout_width="wrap_content"
-            android:layout_height="120px"
-            android:background="@drawable/input_border"
-            android:ems="10"
-            android:hint="BattleTag#1234"
-            android:inputType="textPersonName"
-            android:maxLines="1"
-            android:paddingLeft="9dp"
-            android:textColor="@color/textColorPrimary"
-            android:textSize="18sp"/>
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/battle_tag_submission"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="50dp"
+            android:elevation="2dp"
+            android:text="@string/app_name"
+            android:textAllCaps="true"
+            android:textColor="@android:color/holo_orange_dark"
+            android:textSize="40sp"
+            android:textStyle="bold"/>
 
-        <Button
-            android:id="@+id/submitTag"
-            android:layout_width="wrap_content"
-            android:layout_height="120px"
-            android:layout_alignTop="@+id/battleTag"
-            android:layout_toRightOf="@+id/battleTag"
-            android:background="@android:color/holo_orange_dark"
-            android:text="Submit"/>
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/logo"/>
+
+        <LinearLayout
+            android:id="@+id/battle_tag_submission"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/logo"
+            android:layout_marginTop="35dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <EditText
+                android:id="@+id/battle_tag"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/white"
+                android:hint="@string/input_hint"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:textColor="@color/textColorDark"
+                android:textSize="@dimen/search_menu_text_size"/>
+
+            <Button
+                android:id="@+id/submit_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:background="@android:color/holo_orange_dark"
+                android:text="@string/battle_tag_submit"
+                android:textSize="@dimen/search_button_text_size"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/server_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/battle_tag_submission"
+            android:layout_marginTop="18dp">
+
+            <Spinner
+                android:id="@+id/server_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorPrimaryDark"
+                android:overlapAnchor="false"
+                android:padding="0dp"
+                android:spinnerMode="dropdown"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mode_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/server_layout"
+            android:layout_marginTop="18dp">
+
+            <Spinner
+                android:id="@+id/mode_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorPrimaryDark"
+                android:padding="0dp"
+                android:spinnerMode="dropdown"/>
+        </LinearLayout>
+
     </RelativeLayout>
-
-</RelativeLayout>
+</ScrollView>

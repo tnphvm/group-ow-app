@@ -1,6 +1,19 @@
 <resources>
-    <string name="app_name">GroupWatch</string>
+    <string name="app_name">StatsWatch</string>
     <string name="action_competitive">Competitive Stats</string>
     <string name="main_description">Whose overall competitive stats would you like to look at?</string>
     <string name="stats_title">Career Stats</string>
+    <string name="input_hint">BattleTag#1234</string>
+    <string name="battle_tag_submit">Submit</string>
+
+    <string-array name="server_array">
+        <item>US</item>
+        <item>KR</item>
+        <item>EU</item>
+    </string-array>
+
+    <string-array name="mode_array">
+        <item>Quick Play</item>
+        <item>Competitive</item>
+    </string-array>
 </resources>

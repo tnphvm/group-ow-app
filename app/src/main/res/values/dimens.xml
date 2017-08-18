@@ -7,4 +7,6 @@
     <dimen name="tab_padding_bottom">16dp</dimen>
     <dimen name="tab_label">14sp</dimen>
     <dimen name="custom_tab_layout_height">72dp</dimen>
+    <dimen name="search_menu_text_size">20sp</dimen>
+    <dimen name="search_button_text_size">15sp</dimen>
 </resources>
