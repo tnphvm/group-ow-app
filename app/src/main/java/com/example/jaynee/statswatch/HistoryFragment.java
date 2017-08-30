@@ -1,10 +1,12 @@
-package com.example.jaynee.group_ow;
+package com.example.jaynee.statswatch;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.jaynee.group_ow.R;
 
 
 public class HistoryFragment extends Fragment

@@ -1,4 +1,4 @@
-package com.example.jaynee.group_ow;
+package com.example.jaynee.statswatch;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -1,10 +1,9 @@
-package com.example.jaynee.group_ow;
+package com.example.jaynee.statswatch;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,6 +15,7 @@ import com.android.volley.Request;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.jaynee.group_ow.R;
 import com.google.gson.*;
 
 /**

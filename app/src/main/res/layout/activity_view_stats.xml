@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.jaynee.group_ow.ViewStatsActivity">
+    tools:context="com.example.jaynee.group_ow.com.example.jaynee.statswatch.ViewStatsActivity">
 
     <TextView
         android:text="@string/stats_title"
