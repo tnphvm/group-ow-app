@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/group-ow-app.iml" filepath="$PROJECT_DIR$/group-ow-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/statswatch.iml" filepath="$PROJECT_DIR$/statswatch.iml" />
     </modules>
   </component>
 </project>

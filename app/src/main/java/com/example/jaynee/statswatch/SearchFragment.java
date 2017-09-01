@@ -1,5 +1,6 @@
 package com.example.jaynee.statswatch;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -13,11 +14,13 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.jaynee.group_ow.R;
+import com.example.jaynee.statswatch.R;
 
 
 public class SearchFragment extends Fragment
 {
+   public static final String BATTLE_TAG = "com.example.jaynee.statswatch.BATTLE_TAG";
+
    private Spinner serverList;
    private Spinner modeList;
    private EditText battleTag;
@@ -25,9 +28,7 @@ public class SearchFragment extends Fragment
    private String server;
    private String mode;
 
-   public SearchFragment()
-   {
-   }
+   public SearchFragment() {}
 
    @Override
    public void onCreate(Bundle savedInstanceState)
@@ -42,6 +43,7 @@ public class SearchFragment extends Fragment
 
       public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
       {
+         // Default server
          if (firstItem.equals(String.valueOf(serverList.getSelectedItem())))
          {
             server = firstItem.toLowerCase();
@@ -68,6 +70,7 @@ public class SearchFragment extends Fragment
 
       public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
       {
+         // Default mode
          if (firstItem.equals(String.valueOf(serverList.getSelectedItem())))
          {
             mode = firstItem.toLowerCase();
@@ -83,9 +86,7 @@ public class SearchFragment extends Fragment
       }
 
       @Override
-      public void onNothingSelected(AdapterView<?> arg)
-      {
-      }
+      public void onNothingSelected(AdapterView<?> arg) {}
    }
 
    @Override
@@ -123,9 +124,14 @@ public class SearchFragment extends Fragment
          {
             String battleTagStr = battleTag.getText().toString();
 
-            // TODO add API call under if block
             if (battleTagStr.length() > 0 && battleTagStr.contains("#"))
+            {
                Log.v("EditText", battleTagStr);
+
+               Intent viewStats = new Intent(getActivity(), ViewStatsActivity.class);
+               viewStats.putExtra(BATTLE_TAG, battleTagStr);
+               startActivity(viewStats);
+            }
             else
             {
                Log.v("Err", "Empty string.");

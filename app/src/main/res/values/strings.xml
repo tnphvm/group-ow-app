@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">StatsWatch</string>
-    <string name="action_competitive">Competitive Stats</string>
-    <string name="main_description">Whose overall competitive stats would you like to look at?</string>
-    <string name="stats_title">Career Stats</string>
     <string name="input_hint">BattleTag#1234</string>
     <string name="battle_tag_submit">Submit</string>
 

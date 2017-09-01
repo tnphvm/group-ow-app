@@ -9,7 +9,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 
-import com.example.jaynee.group_ow.R;
+import com.example.jaynee.statswatch.R;
 
 import java.util.ArrayList;
 import java.util.List;

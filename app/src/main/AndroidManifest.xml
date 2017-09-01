@@ -1,33 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<manifest package="com.example.jaynee.group_ow"-->
-          <!--xmlns:android="http://schemas.android.com/apk/res/android">-->
-    <!--<uses-permission android:name="android.permission.INTERNET" />-->
 
-    <!--<application-->
-        <!--android:allowBackup="true"-->
-        <!--android:icon="@mipmap/ic_launcher"-->
-        <!--android:label="@string/app_name"-->
-        <!--android:theme="@style/AppTheme" >-->
-        <!--<activity-->
-            <!--android:name=".MainActivity"-->
-            <!--android:label="@string/app_name" >-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
-
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
-    <!--</application>-->
-
-        <!--<activity-->
-            <!--android:name=".ViewStatsActivity"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:parentActivityName=".MainActivity"-->
-            <!--android:theme="@style/AppTheme.NoActionBar">-->
-        <!--</activity>-->
-<!--</manifest>-->
-
-<manifest package="com.example.jaynee.group_ow"
+<manifest package="com.example.jaynee.statswatch"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -46,6 +19,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-    </application>
 
+        <activity android:name="com.example.jaynee.statswatch.ViewStatsActivity" />
+    </application>
 </manifest>
