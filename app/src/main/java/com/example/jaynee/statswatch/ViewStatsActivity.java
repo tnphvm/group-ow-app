@@ -1,10 +1,10 @@
 package com.example.jaynee.statswatch;
 
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,54 +14,53 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.Request;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.jaynee.statswatch.R;
 import com.google.gson.*;
 
-import org.w3c.dom.Text;
+import org.json.JSONObject;
 
-/**
- * ViewStatsActivity class is the new activity that is launched from the main activity when the user
- * selects a user to view his or her game stats. This activity displays all of the user's overall competitive
- * competitive stats that is pulled from a web API. The API sends the stats in a JSON file, parsed using
- * GSON and Volley, and then the individual stats are stored into its respective variables in the Stats
- * class.
- * <p>
- * Networking Help: https://kylewbanks.com/blog/Implementing-Google-Plus-Style-ListView-Animations-on-Android
- */
+
 public class ViewStatsActivity extends AppCompatActivity
 {
    // Example of API call: https://owapi.net/api/v3/u/{battle-tag}/stats
+   static final String API_CALL = "https://owapi.net/api/v3/u/";
 
-   private TextView battleTag;
-   private RequestQueue requestQueue;
-   private Gson gson;
-   private Stats userStats;
-   private ProgressDialog parsingStats;
+   private ProgressBar statsProgress;
+   private String battleTag;
+   private String server;
+   private String mode;
+   private ImageView profPic;
 
-   /**
-    * Initializes the activity and stores the battle.net ID of the user passed from the previous
-    * activity and find his or her game data.
-    *
-    * @param savedInstanceState Data stored about the app's previous state
-    */
    @Override
    protected void onCreate(Bundle savedInstanceState)
    {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_view_stats);
 
-      String attr = getIntent().getStringExtra(SearchFragment.BATTLE_TAG);
+      battleTag = getIntent().getStringExtra(SearchFragment.BATTLE_TAG);
+      mode = getIntent().getStringExtra(SearchFragment.GAME_MODE);
+      server = getIntent().getStringExtra(SearchFragment.CURR_SERVER);
+      String info = server + " - " + mode;
 
-      if (attr != null)
-         Log.v("battleId: ", attr);
+//      if (battleTag != null)
+//         Log.v("battleId: ", battleTag);
 
-      battleTag = (TextView) findViewById(R.id.battle_tag);
-      battleTag.setText(attr);
+      battleTag = battleTag.replace('#', '-');
+      server = server.replaceAll("\\s","").toLowerCase();
+      mode = mode.replaceAll("\\s","").toLowerCase();
 
-      attr = attr.replace('#', '-');
-      Log.v("Api format", attr);
+      Log.v("Api format", battleTag);
+      Log.v("Api format", server);
+      Log.v("Api format", mode);
+
+      final String url = API_CALL + battleTag + "/stats";
+      Log.v("API url", url);
+
+      fetchStats(url);
 
 //        final String user = getIntent().getStringExtra("battleID");
 //        final String urlStr = "https://api.lootbox.eu/pc/us/" + user + "/competitive/allHeroes/";
@@ -74,101 +73,107 @@ public class ViewStatsActivity extends AppCompatActivity
 //        fetchPosts(urlStr);
    }
 
-   /**
-    * Initializes the TextView objects and populates them with the stats property names and values
-    * to display on the activity content.
-    */
-   private void displayStats()
+   private void displayStats(JSONObject stats)
    {
-      final TextView statsNames = (TextView) findViewById(R.id.stats_props);
-      final TextView statsVals = (TextView) findViewById(R.id.stats_values);
-      final String properties[] = userStats.getStatsProperties();
-      final String[] values = userStats.getStatsValues();
+//      this.battleTag = (TextView) findViewById(R.id.battle_tag);
+//      serverInfo = (TextView) findViewById(R.id.server_info);
 
-      for (String prop : properties) {
-         statsNames.append(prop + "\n");
+//      this.battleTag.setText(battleTag);
+//      serverInfo.setText(info);
+
+      try
+      {
+         JSONObject serverStats = stats.getJSONObject("stats");
+         serverStats = serverStats.getJSONObject(mode);
+
+         JSONObject gameStats = serverStats.getJSONObject("game_stats");
+         JSONObject overallStats = serverStats.getJSONObject("overall_stats");
+//         JSONObject averageStats = serverStats.getJSONObject("average_stats");
+
+         String game = gameStats.toString();
+         String overall = overallStats.toString();
+//         String average = averageStats.toString();
+
+         Log.v("game", game);
+         Log.v("overall", overall);
+//         Log.v("average", average);
+
+         String imgUrl = overallStats.getString("avatar");
+
+         profPic = (ImageView) findViewById(R.id.prof_icon);
+         Glide.with(getBaseContext()).load(imgUrl).into(profPic);
       }
-
-      for (String val : values) {
-         statsVals.append(val + "\n");
+      catch(Exception e)
+      {
+         e.printStackTrace();
       }
    }
 
-   /**
-    * This method will attempt to connect to the API's request URL for the individual data on
-    * overall competitive play.
-    *
-    * @param ENDPOINT The URL request to make a connection to
-    */
-   private void fetchPosts(String ENDPOINT)
+   private void fetchStats(final String endPoint)
    {
-      parsingStats = new ProgressDialog(ViewStatsActivity.this);
+      statsProgress = (ProgressBar) findViewById(R.id.progressBar_cyclic);
       final int timeout = 30000;
-      final StringRequest request = new StringRequest(Request.Method.GET, ENDPOINT,
-            onPostsLoaded, onPostsError);
       final RetryPolicy policy = new DefaultRetryPolicy(timeout, 2,
             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+      RequestQueue queue = Volley.newRequestQueue(this);
 
-      request.setRetryPolicy(policy);
-      requestQueue.add(request);
+      statsProgress.setVisibility(ProgressBar.VISIBLE);
+      StringRequest statsReq = new StringRequest(
+            Request.Method.GET, endPoint,
+            new Response.Listener<String>()
+            {
+               @Override
+               public void onResponse(String response)
+               {
+                  statsProgress.setVisibility(ProgressBar.INVISIBLE);
+//                  Log.v("Response", response);
 
-      parsingStats.setMessage("Retrieving data...");
-      parsingStats.setCancelable(true);
-      parsingStats.setOnCancelListener(new DialogInterface.OnCancelListener()
-      {
-         @Override
-         public void onCancel(DialogInterface dialog)
-         {
-            finish();   // Closes the activity if the user cancels during loading
-         }
-      });
-      parsingStats.show();
+                  try
+                  {
+                     JSONObject jsonStats = new JSONObject(response);
+                     jsonStats = jsonStats.getJSONObject(server);
+
+                     displayStats(jsonStats);
+                  }
+                  catch (Exception e)
+                  {
+                     errorMessage("Unable to find data.");
+                     finish();
+                  }
+               }
+            },
+            new Response.ErrorListener()
+            {
+               @Override
+               public void onErrorResponse(VolleyError error)
+               {
+                  Log.v("Error: ", "Can't find data");
+
+                  errorMessage("Unable to retrieve data.");
+                  finish();
+               }
+            });
+
+      statsReq.setRetryPolicy(policy);
+      queue.add(statsReq);
+
+//      parsingStats.setMessage("Retrieving data...");
+//      parsingStats.setCancelable(true);
+//      parsingStats.setOnCancelListener(new DialogInterface.OnCancelListener()
+//      {
+//         @Override
+//         public void onCancel(DialogInterface dialog)
+//         {
+//            finish();   // Closes the activity if the user cancels during loading
+//         }
+//      });
+//      parsingStats.show();
+
    }
 
-   /**
-    * When a successful connection has been made, this method displays the player's stats.
-    */
-   private final Response.Listener<String> onPostsLoaded = new Response.Listener<String>()
+   private void errorMessage(String message)
    {
-      @Override
-      public void onResponse(String response)
-      {
-         userStats = gson.fromJson(response, Stats.class);
-
-//            Log.i("PostActivity", "Solo Kills: " + userStats.SoloKills);
-         parsingStats.dismiss();
-
-         if (userStats.statsAvailable()) {
-            displayStats();
-         } else {
-            Toast.makeText(ViewStatsActivity.this, "No competitive play data.",
-                  Toast.LENGTH_LONG).show();
-            finish();
-         }
-      }
-   };
-
-   /**
-    * A failed connection will close the activity and display an error toast message.
-    */
-   private final Response.ErrorListener onPostsError = new Response.ErrorListener()
-   {
-      @Override
-      public void onErrorResponse(VolleyError error)
-      {
-         // Log.e("PostActivity", error.toString());
-         Toast.makeText(ViewStatsActivity.this, "Unable to retrieve data.",
-               Toast.LENGTH_LONG).show();
-         finish();
-      }
-   };
-
-
-//    @Override
-//    public void onBackPressed()
-//    {
-//        // Write your code here
-//
-//        super.onBackPressed();
-//    }
+      Toast.makeText(ViewStatsActivity.this, message,
+            Toast.LENGTH_LONG).show();
+   }
 }

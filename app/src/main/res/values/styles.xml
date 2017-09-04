@@ -11,6 +11,10 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>e
+
+    <style name="OrangeAccent" parent="ThemeOverlay.AppCompat.Light">
+        <item name="colorAccent">@color/orangeAccent</item>
     </style>
 
 </resources>

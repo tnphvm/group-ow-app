@@ -20,6 +20,8 @@ import com.example.jaynee.statswatch.R;
 public class SearchFragment extends Fragment
 {
    public static final String BATTLE_TAG = "com.example.jaynee.statswatch.BATTLE_TAG";
+   public static final String GAME_MODE = "com.example.jaynee.statswatch.GAME_MODE";
+   public static final String CURR_SERVER = "com.example.jaynee.statswatch.SERVER";
 
    private Spinner serverList;
    private Spinner modeList;
@@ -28,7 +30,12 @@ public class SearchFragment extends Fragment
    private String server;
    private String mode;
 
-   public SearchFragment() {}
+   public SearchFragment()
+   {
+      // Default
+      server = "us";
+      mode = "quickplay";
+   }
 
    @Override
    public void onCreate(Bundle savedInstanceState)
@@ -43,17 +50,16 @@ public class SearchFragment extends Fragment
 
       public void onItemSelected(AdapterView<?> parent, View view, int pos, long id)
       {
-         // Default server
          if (firstItem.equals(String.valueOf(serverList.getSelectedItem())))
          {
-            server = firstItem.toLowerCase();
+            server = firstItem;
          }
          else
          {
-            Toast.makeText(parent.getContext(),
-                    "You have selected : " + parent.getItemAtPosition(pos).toString(),
-                    Toast.LENGTH_LONG).show();
-            server = parent.getItemAtPosition(pos).toString().toLowerCase();
+//            Toast.makeText(parent.getContext(),
+//                    "You have selected : " + parent.getItemAtPosition(pos).toString(),
+//                    Toast.LENGTH_LONG).show();
+            server = parent.getItemAtPosition(pos).toString();
          }
 
          Log.v("Server", server);
@@ -73,13 +79,13 @@ public class SearchFragment extends Fragment
          // Default mode
          if (firstItem.equals(String.valueOf(serverList.getSelectedItem())))
          {
-            mode = firstItem.toLowerCase();
+            mode = firstItem;
          } else
          {
-            Toast.makeText(parent.getContext(),
-                    "You have selected : " + parent.getItemAtPosition(pos).toString(),
-                    Toast.LENGTH_LONG).show();
-            mode = parent.getItemAtPosition(pos).toString().replaceAll("\\s","").toLowerCase();
+//            Toast.makeText(parent.getContext(),
+//                    "You have selected : " + parent.getItemAtPosition(pos).toString(),
+//                    Toast.LENGTH_LONG).show();
+            mode = parent.getItemAtPosition(pos).toString();
          }
 
          Log.v("Mode", mode);
@@ -130,6 +136,8 @@ public class SearchFragment extends Fragment
 
                Intent viewStats = new Intent(getActivity(), ViewStatsActivity.class);
                viewStats.putExtra(BATTLE_TAG, battleTagStr);
+               viewStats.putExtra(GAME_MODE, mode);
+               viewStats.putExtra(CURR_SERVER, server);
                startActivity(viewStats);
             }
             else
