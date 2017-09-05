@@ -34,6 +34,8 @@ public class ViewStatsActivity extends AppCompatActivity
    private String server;
    private String mode;
    private ImageView profPic;
+   private TextView tagView;
+   private TextView serverInfo;
 
    @Override
    protected void onCreate(Bundle savedInstanceState)
@@ -44,7 +46,6 @@ public class ViewStatsActivity extends AppCompatActivity
       battleTag = getIntent().getStringExtra(SearchFragment.BATTLE_TAG);
       mode = getIntent().getStringExtra(SearchFragment.GAME_MODE);
       server = getIntent().getStringExtra(SearchFragment.CURR_SERVER);
-      String info = server + " - " + mode;
 
 //      if (battleTag != null)
 //         Log.v("battleId: ", battleTag);
@@ -75,11 +76,9 @@ public class ViewStatsActivity extends AppCompatActivity
 
    private void displayStats(JSONObject stats)
    {
-//      this.battleTag = (TextView) findViewById(R.id.battle_tag);
-//      serverInfo = (TextView) findViewById(R.id.server_info);
-
-//      this.battleTag.setText(battleTag);
-//      serverInfo.setText(info);
+      profPic = (ImageView) findViewById(R.id.prof_icon);
+      tagView = (TextView) findViewById(R.id.battle_tag);
+      serverInfo = (TextView) findViewById(R.id.server_info);
 
       try
       {
@@ -99,9 +98,12 @@ public class ViewStatsActivity extends AppCompatActivity
 //         Log.v("average", average);
 
          String imgUrl = overallStats.getString("avatar");
-
-         profPic = (ImageView) findViewById(R.id.prof_icon);
          Glide.with(getBaseContext()).load(imgUrl).into(profPic);
+
+         // TODO fix formating of tag and server info to not all lowercase
+         String info = server + " - " + mode;
+         tagView.setText(battleTag);
+         serverInfo.setText(info);
       }
       catch(Exception e)
       {

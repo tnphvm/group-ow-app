@@ -3,14 +3,11 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                tools:context="com.example.jaynee.group_ow.com.example.jaynee.statswatch.HistoryFragment">
+                tools:context="com.example.jaynee.statswatch.HistoryFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Some string"
-        android:textSize="40dp"
-        android:textStyle="bold"/>
-
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_history"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    </android.support.v7.widget.RecyclerView>
 </RelativeLayout>

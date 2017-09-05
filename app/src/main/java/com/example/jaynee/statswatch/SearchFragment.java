@@ -130,9 +130,11 @@ public class SearchFragment extends Fragment
          {
             String battleTagStr = battleTag.getText().toString();
 
-            if (battleTagStr.length() > 0 && battleTagStr.contains("#"))
+            if (isValidTag(battleTagStr))
             {
                Log.v("EditText", battleTagStr);
+
+               HistoryFragment.addPlayer(battleTagStr);
 
                Intent viewStats = new Intent(getActivity(), ViewStatsActivity.class);
                viewStats.putExtra(BATTLE_TAG, battleTagStr);
@@ -151,5 +153,13 @@ public class SearchFragment extends Fragment
       });
 
       return mainView;
+   }
+
+   private boolean isValidTag(String tag)
+   {
+      if (tag.length() > 0 && tag.contains("#"))
+         return true;
+
+      return false;
    }
 }
