@@ -2,9 +2,9 @@ package com.example.jaynee.statswatch;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Stats class stores each statistical information from the JSON file retrieved from the API.
- */
+/** Class used in previous version of this app. May not need this class anymore but will keep
+ * in case it can be repurposed in the future.
+*/
 public class Stats
 {
 //    @SerializedName("SoloKills")
